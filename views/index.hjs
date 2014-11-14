@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <script src="javascripts/jquery-1.11.0.min.js"></script>
+	<script src="javascripts/jquery.knobs.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script>
+	window.onload = function() {
+		$(document).ready(function(){
+			$(document).ready(update);
+			
+			function update() {
+				console.log("Attempting to get WIFI Singal Strength vi iwconfig");
+		 	    $.post("/getWifiSignal", { action:"update" },
+		 	    	function(data){ 
+						console.log(data); 
+							knobfunction(data);				
+						window.setTimeout(update, 2000);
+					});
+			}
+			
+			function knobfunction(value1){
+				$('.dial')
+			    .val(value1)
+			    .trigger('change');
+			}
+			
+			$("#forward-button").mousedown(function(){
+    			$.post("/forward", function(data,status){
+      				console.log("Data: " + data + "\nStatus: " + status);
+    			});
+  			}).mouseup(function() {
+    			$.post("/stop", function(data,status){
+      				console.log("Data: " + data + "\nStatus: " + status);
+    			});
+  			});
+	
+			
+			$("#backward-button").mousedown(function(){
+                $.post("/backward", function(data,status){
+                	console.log("Data: " + data + "\nStatus: " + status);
+                });
+             }).mouseup(function() {
+    			$.post("/stop", function(data,status){
+      				console.log("Data: " + data + "\nStatus: " + status);
+    			});
+  			});;
+			 
+			 
+			 $("#forward-left").mousedown(function(){
+                 $.post("/forward-left", function(data,status){
+                     console.log("Data: " + data + "\nStatus: " + status);
+                  });
+             }).mouseup(function() {
+    			$.post("/stop", function(data,status){
+      				console.log("Data: " + data + "\nStatus: " + status);
+    			});
+  			});;
+			 
+			 
+			 $("#forward-right").mousedown(function(){
+                  $.post("/forward-right", function(data,status){
+                      console.log("Data: " + data + "\nStatus: " + status);
+                   });
+              }).mouseup(function() {
+    			$.post("/stop", function(data,status){
+      				console.log("Data: " + data + "\nStatus: " + status);
+    			});
+  			});;
+			  
+			  
+ 			 $("#backward-left").mousedown(function(){
+                  $.post("/backward-left", function(data,status){
+                      console.log("Data: " + data + "\nStatus: " + status);
+                   });
+              }).mouseup(function() {
+    			$.post("/stop", function(data,status){
+      				console.log("Data: " + data + "\nStatus: " + status);
+    			});
+  			});;
+
+			  
+ 			 $("#backward-right").mousedown(function(){
+                   $.post("/backward-right", function(data,status){
+                       console.log("Data: " + data + "\nStatus: " + status);
+                    });
+               }).mouseup(function() {
+    			$.post("/stop", function(data,status){
+      				console.log("Data: " + data + "\nStatus: " + status);
+    			});
+  			});;
+			   
+			   
+   			 $("#stop").click(function(){
+                    $.post("/stop", function(data,status){
+                        console.log("Data: " + data + "\nStatus: " + status);
+                     });
+                });
+		  });
+	}
+    </script>
+  </head>
+  <body>
+	  <div class="wrapper">
+        <img id="cam" src="http://192.168.1.7:8080/?action=stream"/>
+		<div class="dials">
+			<input type="text" class="dial" data-height="300" data-width="200" data-fgColor="#121f1f" data-angleOffset=-125 data-angleArc=250>
+		</div>
+		<div id="forward-button"></div>
+		<div id="backward-button"></div>
+		<div id="forward-left"></div>
+		<div id="forward-right"></div>
+		<div id="stop"></div>
+	</div>
+	<script>
+		$(".dial").knob({
+					'thickness': 0.5,
+					'min' : 0,
+					'max' : 70,
+	                 'change' : function (v) { console.log(v); }
+	    });
+	</script>
+  </body>
+</html>
