@@ -23,3 +23,8 @@ Features:
 Note:
 
 This is still very much a work in progress and I will update code as I go along, currently it works, but it's flaky.
+
+Image of WIFI Car
+
+![alt tag](https://raw.githubusercontent.com/rubberbird/RaspbiCar/master/public/images/wificar.jpg)
+
